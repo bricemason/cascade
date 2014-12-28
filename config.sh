@@ -15,7 +15,7 @@ SCRIPTDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SDKDIR="$HOME/lib/touch-2.4.0"
 
 # directory where apps will be generated
-APPSDIR="$HOME/Desktop/cascade-appssss"
+APPSDIR="$HOME/Desktop/cascade-apps"
 
 # default domain used for the cordova namespace
 CORDOVADOMAIN=com.example

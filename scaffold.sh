@@ -100,6 +100,11 @@ echo "@import '$THEMENAME/theme';" > "$SASSDIR/app.scss"
 # compile styles
 cd $SASSDIR && compass compile --force
 
+# patch in the cordova library
+cd $PROJECTDIR
+touch cordova.js
+sed -i.bak 's@</style>@&<script type="text/javascript" src="cordova.js"></script>@' index.html
+
 cd $SCRIPTDIR
 
 say "Scaffold complete"

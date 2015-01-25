@@ -25,6 +25,14 @@ An example scaffold might look like this:
 
 `./scaffold.sh MyApp my-app`
 
+You can also scaffold an app with the [Marcy framework](https://github.com/bricemason/marcy) baked in:
+
+`./scaffold.sh -marcy [APPNAME] [APPDIRNAME`
+
+An example scaffold with Marcy baked in might look like:
+
+`./scaffold.sh -marcy MyMarcyApp my-marcy-app`
+
 #### Building
 
 Once your app has been generated, there will be a build.sh script under the `scripts` directory of your app. To execute a build run the following command:

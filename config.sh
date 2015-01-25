@@ -35,10 +35,22 @@ IONICONSDIR="$LIBDIR/ionicons"
 # directory for the base theme
 BASETHEMEDIR="$LIBDIR/base-theme"
 
+# directory for marcy template assets
+MARCYTEMPLATEDIR="$LIBDIR/marcy-templates"
+
 function banner {
     echo "=================================================="
     echo "Cascade"
     echo "Scaffolding and build scripts for Sencha Touch"
-    echo "https://github.com/bricemason/cascade.git"
+    echo "https://github.com/bricemason/cascade"
     echo "=================================================="
+}
+
+function errorIncorrectParameter {
+    banner
+    echo "Scaffold a default Sencha Touch application"
+    echo "./scaffold.sh <applicationName> <applicationDirectory>"
+    echo
+    echo "Scaffold an app with the Marcy framework (https://github.com/bricemason/marcy):"
+    echo "./scaffold.sh -marcy <applicationName> <applicationDirectory>"
 }

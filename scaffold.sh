@@ -3,8 +3,27 @@
 # load configuration
 source config.sh
 
+WITHMARCY=0
 APPNAME=$1
-PROJECTDIR="$APPSDIR/$2"
+APPDIR=$2
+
+# if there are three arguments, the first one must be asking
+# to include the marcy framework
+if [ "$#" = 3 ]; then
+    if [ $1 = "-marcy" ]; then
+        WITHMARCY=1
+        APPNAME=$2
+        APPDIR=$3
+    else
+        errorIncorrectParameter
+        exit 1
+    fi
+elif [ "$#" != 2 ]; then
+    errorIncorrectParameter
+    exit 1
+fi
+
+PROJECTDIR="$APPSDIR/$APPDIR"
 CORDOVANAMESPACE="$CORDOVADOMAIN.$APPNAME"
 FONTSDIR="$PROJECTDIR/resources/fonts"
 SASSDIR="$PROJECTDIR/resources/sass"
@@ -18,12 +37,6 @@ banner
 # make sure the sdk directory exists
 if [ ! -e "$SDKDIR" ]; then
     echo "The SDKDIR directory $SDKDIR does not exist"
-    exit 1
-fi
-
-# make sure we have two arguments passed in
-if [ "$#" != 2 ]; then
-    echo "You must pass in an app name and project directory name."
     exit 1
 fi
 
@@ -104,6 +117,31 @@ cd $SASSDIR && compass compile --force
 cd $PROJECTDIR
 touch cordova.js
 sed -i.bak 's@</style>@&<script type="text/javascript" src="cordova.js"></script>@' index.html
+
+if [ $WITHMARCY = 1 ]; then
+    # pull down the framework
+    git clone https://github.com/bricemason/marcy lib/marcy
+
+    # copy over the Application class template
+    cp "$MARCYTEMPLATEDIR/Application.js" "$PROJECTDIR/app/Application.js"
+
+    # copy over the app.js template
+    cp "$MARCYTEMPLATEDIR/app.js" "$PROJECTDIR/app.js"
+
+    # add marcy to the classpath
+    sed -i.bak 's@app.classpath=${app.dir}/app.js,${app.dir}/app@&,${app.dir}/lib/marcy@' "$PROJECTDIR/.sencha/app/sencha.cfg"
+
+    # modify the Application.js and app.js files to use the proper app name
+    sed -i '' "s@MyApp@$APPNAME@" "$PROJECTDIR/app/Application.js"
+    sed -i '' "s@MyApp@$APPNAME@" "$PROJECTDIR/app.js"
+
+    # since we modified the class path, we need to refresh the build
+    sencha app refresh
+fi
+
+# initialize the native projects by running a build
+cd $SCRIPTSDIR
+./build.sh native
 
 cd $SCRIPTDIR
 

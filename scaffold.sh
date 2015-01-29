@@ -95,8 +95,8 @@ mkdir $FONTSDIR
 # copy the ionicons font set to the app
 cp $IONICONSDIR/fonts/* $FONTSDIR
 
-# copy the base theme over to the app
-cp -r $BASETHEMEDIR "$THEMEDIR"
+# pull down the base marcy theme
+git clone https://github.com/bricemason/theme-marcy.git $THEMEDIR
 
 # create the theme lib directory
 mkdir $THEMELIBDIR
@@ -105,7 +105,7 @@ mkdir $THEMELIBDIR
 cp -r $IONICONSDIR "$THEMELIBDIR"
 
 # add ionicons to the font partial in the theme
-echo "@import 'lib/ionicons/scss/ionicons';" > "$THEMEDIR/_fonts.scss"
+echo "@import 'lib/ionicons/scss/ionicons';" >> "$THEMEDIR/_fonts.scss"
 
 # hook in the theme
 echo "@import '$THEMENAME/theme';" > "$SASSDIR/app.scss"

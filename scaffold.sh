@@ -116,7 +116,6 @@ cd $SASSDIR && compass compile --force
 # patch in the cordova library
 cd $PROJECTDIR
 touch cordova.js
-sed -i.bak 's@</style>@&<script type="text/javascript" src="cordova.js"></script>@' index.html
 
 if [ $WITHMARCY = 1 ]; then
     # pull down the framework

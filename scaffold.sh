@@ -46,20 +46,9 @@ if [ -e "$PROJECTDIR" ]; then
     exit 1
 fi
 
-# create a sencha workspace in the apps directory if one doesn't already exist
-if [ ! -e "$APPSDIR/.sencha" ]; then
-    sencha -sdk $SDKDIR generate workspace $APPSDIR
-
-    # handle errors
-    RC=$?
-    if [ $RC != 0 ]; then
-        echo "Error attempting to create sencha workspace."
-        exit 1
-    fi
-fi
-
 # generate the sencha app
-cd $FRAMEWORKDIR && sencha generate app $APPNAME $PROJECTDIR
+cd $SDKDIR
+sencha generate app $APPNAME $PROJECTDIR
 
 # handle errors
 RC=$?

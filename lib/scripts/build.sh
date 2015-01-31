@@ -32,6 +32,10 @@ if [ $BUILDTYPE = "native" ]; then
             APKFILE="cordova/platforms/android/ant-build/CordovaApp-debug.apk"
         fi
 
+        cd cordova
+        cordova build android
+        cd ..
+
         adb -d install -r $APKFILE
     fi
 fi
